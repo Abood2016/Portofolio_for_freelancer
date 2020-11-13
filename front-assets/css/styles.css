@@ -10145,6 +10145,7 @@ h3 {
   max-width: 25rem;
   border-radius: 0.5rem;
   overflow: hidden;
+  max-height: 250px;
 }
 .portfolio .portfolio-item .portfolio-item-caption {
   position: absolute;
