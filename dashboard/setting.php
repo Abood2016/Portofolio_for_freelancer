@@ -7,26 +7,29 @@ if (empty($_SESSION['user'])) {
     header('LOCATION:login.php');
 }
 
-require_once('lib/portfolio.php');
+require_once('lib/setting.php');
 
 // print_r($_SESSION['user']);
 // die;
-if (isset($_POST['description'])) {
+if (isset($_POST['about'])) {
 
-    $description = $_POST['description'];
+    $about = $_POST['about'];
+    $title = $_POST['title'];
     $user_id = $_SESSION['user']['id'];
 
-    $tmp =  $_FILES['image']['tmp_name']; //  الأسم المؤقت الي عملها php لم اعمل تحميل
-    $filename = $_FILES['image']['name']; // عشان اجيب اسم الصورة الأصلي 
+    $tmp =  $_FILES['avatar']['tmp_name']; //  الأسم المؤقت الي عملها php لم اعمل تحميل
+    $filename = $_FILES['avatar']['name']; // عشان اجيب اسم الصورة الأصلي 
     move_uploaded_file($tmp, "upload/" . $filename);
 
-    //function that add new portfolio
-    $res = add_new_portfolio($description, $filename, $user_id);
+    // echo '<pre>';
+    // print_r($_FILES);die;
+    //function that add new Setting
+    $res = add_new_setting($about, $title, $filename, $user_id);
 
     if ($res == true) {
-        $success = 'Project Inserted Successfully';
+        $success = 'Setting Inserted Successfully';
     } else {
-        $error = 'Project Not Inserted';
+        $error = 'Setting Not Inserted';
     }
 }
 
@@ -256,12 +259,12 @@ if (isset($_POST['description'])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark">Portfolio</h1>
+                            <h1 class="m-0 text-dark">Setting</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="home.php">Home</a></li>
-                                <li class="breadcrumb-item active">Portfolio</li>
+                                <li class="breadcrumb-item active">Setting</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -279,35 +282,40 @@ if (isset($_POST['description'])) {
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Add New Portfolio</h3>
+                            <h3 class="card-title">Add New Setting</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="portfolio.php" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="setting.php" method="POST" enctype="multipart/form-data">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Description</label>
-                                    <textarea name="description" class="form-control description" cols="10" rows="5"></textarea>
+                                    <label for="exampleInputEmail1">About</label>
+                                    <textarea name="about" class="form-control about" cols="10" rows="5"></textarea>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Image</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="image" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                        </div>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="">Upload</span>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Title</label>
+                                        <input type="text" name="title" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputFile">Image</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="avatar" class="custom-file-input" id="exampleInputFile">
+                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="">Upload</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /.card-body -->
+                                <!-- /.card-body -->
 
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                         </form>
                     </div>
             </section>
@@ -360,7 +368,7 @@ if (isset($_POST['description'])) {
     <script>
         $(function() {
             // Summernote
-            $('.description').summernote()
+            $('.about').summernote()
         })
     </script>
     <!-- overlayScrollbars -->

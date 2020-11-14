@@ -1,9 +1,14 @@
 <?php
 
 require_once('dashboard/lib/portfolio.php');
+require_once('dashboard/lib/setting.php');
 
 
 $portfios = GetPortfolios();
+$settings = GetSettings();
+
+// echo '<pre>';
+// print_r($settings['about']);die;
 
 
 ?>
@@ -35,7 +40,7 @@ $portfios = GetPortfolios();
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+            <a class="navbar-brand js-scroll-trigger" href="#page-top"><?= $settings['title'] ?></a>
             <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
@@ -53,9 +58,10 @@ $portfios = GetPortfolios();
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
             <!-- Masthead Avatar Image-->
-            <img class="masthead-avatar mb-5" src="front-assets/assets/img/avataaars.svg" alt="" />
+            <img class="" width="300px" style="border-radius: 150px;" src="dashboard/upload/<?= $settings['avatar'] ?>" alt="" />
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0">Start Bootstrap</h1>
+            <br>
+            <h1 class=" masthead-heading text-uppercase mb-0"><?= $settings['title'] ?></h1>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -63,7 +69,7 @@ $portfios = GetPortfolios();
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Masthead Subheading-->
-            <p class="masthead-subheading font-weight-light mb-0">Graphic Artist - Web Designer - Illustrator</p>
+            <p class="masthead-subheading font-weight-light mb-0">Web Developer - PHP-LARAVEL</p>
         </div>
     </header>
     <!-- Portfolio Section-->
@@ -82,7 +88,7 @@ $portfios = GetPortfolios();
                 <!-- Portfolio Item 1-->
                 <?php foreach ($portfios as $portfio) : ?>
                     <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1" id="<?= $portfio['id'] ?>" >
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
@@ -107,17 +113,17 @@ $portfios = GetPortfolios();
             <!-- About Section Content-->
             <div class="row">
                 <div class="col-lg-4 ml-auto">
-                    <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p>
+                    <p class="lead"><?= $settings['about'] ?></p>
                 </div>
                 <div class="col-lg-4 mr-auto">
-                    <p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p>
+                    <p class="lead"><?= $settings['about'] ?></p>
                 </div>
             </div>
             <!-- About Section Button-->
             <div class="text-center mt-4">
-                <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
-                    <i class="fas fa-download mr-2"></i>
-                    Free Download!
+                <a class="btn btn-xl btn-outline-light" target="_blanck" href="https://www.linkedin.com/in/abedelrahman/">
+                    <i class="fas fa-link mr-2"></i>
+                    My Linked In Account
                 </a>
             </div>
         </div>
@@ -182,9 +188,9 @@ $portfios = GetPortfolios();
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">Location</h4>
                     <p class="lead mb-0">
-                        2215 John Daniel Drive
+                        Palestine
                         <br />
-                        Clark, MO 65243
+                        Gaza
                     </p>
                 </div>
                 <!-- Footer Social Icons-->
@@ -192,17 +198,15 @@ $portfios = GetPortfolios();
                     <h4 class="text-uppercase mb-4">Around the Web</h4>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/abedelrahman/"><i class="fab fa-fw fa-linkedin-in"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
                 </div>
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="text-uppercase mb-4">About Freelancer</h4>
                     <p class="lead mb-0">
-                        Freelance is a free to use, MIT licensed Bootstrap theme created by
-                        <a href="http://startbootstrap.com">Start Bootstrap</a>
+                        <?= $settings['about'] ?>
                         .
-                    </p>
                 </div>
             </div>
         </div>
@@ -236,7 +240,7 @@ $portfios = GetPortfolios();
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <!-- Portfolio Modal - Image-->
-                                <img class="img-fluid rounded mb-5" src="front-assets/assets/img/portfolio/cabin.png" alt="" />
+                                <img class="img-fluid rounded mb-5" src="dashboard/upload/<?= $portfios['image'] ?>" alt="" />
                                 <!-- Portfolio Modal - Text-->
                                 <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
                                 <button class="btn btn-primary" data-dismiss="modal">

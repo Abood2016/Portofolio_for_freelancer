@@ -192,8 +192,8 @@ if (empty($_SESSION['user'])) {
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item has-treeview menu-open">
-              <a href="#" class="nav-link active">
+            <li class="nav-item has-treeview ">
+              <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
@@ -202,23 +202,44 @@ if (empty($_SESSION['user'])) {
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="portfolio.php" class="nav-link active">
+                  <a href="portfolio.php" class="nav-link ">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Portfolio</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index2.html" class="nav-link">
+                  <a href="allportfolio.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v2</p>
+                    <p>All Portfolios</p>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview ">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-setting-alt"></i>
+                <p>
+                  Settings
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="setting.php" class="nav-link ">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add New Setting</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index3.html" class="nav-link">
+                  <a href="allportfolio.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v3</p>
+                    <p>All Settings</p>
                   </a>
                 </li>
+
+
               </ul>
             </li>
           </ul>

@@ -186,15 +186,9 @@ $data = GetPortfolios();
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index2.html" class="nav-link">
+                                    <a href="allportfolio.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v2</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v3</p>
+                                        <p>All Portfolios</p>
                                     </a>
                                 </li>
                             </ul>
@@ -254,8 +248,8 @@ $data = GetPortfolios();
                                         <td><?php echo $portfolio['description'] ?></td>
                                         <td><?php echo $portfolio['user_name'] ?></td>
                                         <td><img height="200px" src="upload/<?= $portfolio['image'] ?>"></td>
-                                        <td><a class="btn btn-secondary">Update</a></td>
-                                        <td><a class="btn btn-danger">Delete</a></td>
+                                        <td><a href="updateportfolio.php?proid=<?= $portfolio['id'] ?>" class="btn btn-secondary">Update</a></td>
+                                        <td><a href="deleteportfolio.php?proid=<?= $portfolio['id'] ?>" class="btn btn-danger">Delete</a></td>
 
                                     </tr>
 

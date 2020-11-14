@@ -2,35 +2,42 @@
 
 session_start();
 
-if (empty($_SESSION['user'])) {
-
-    header('LOCATION:login.php');
-}
-
 require_once('lib/portfolio.php');
 
-// print_r($_SESSION['user']);
-// die;
+
 if (isset($_POST['description'])) {
 
+    // print_r($_POST);
+    // die;
     $description = $_POST['description'];
-    $user_id = $_SESSION['user']['id'];
+    $pro_id = $_POST['pro_id']; // الانبوت المخفي الي جاي من الفورم
+    if (isset($_FILES['image']['name'])) {
+        $tmp =  $_FILES['image']['tmp_name']; //  الأسم المؤقت الي عملها php لم اعمل تحميل
+        $filename = $_FILES['image']['name']; // عشان اجيب اسم الصورة الأصلي 
+        move_uploaded_file($tmp, "upload/" . $filename);
+    } else {
+        $filename = '';
+    }
 
-    $tmp =  $_FILES['image']['tmp_name']; //  الأسم المؤقت الي عملها php لم اعمل تحميل
-    $filename = $_FILES['image']['name']; // عشان اجيب اسم الصورة الأصلي 
-    move_uploaded_file($tmp, "upload/" . $filename);
-
-    //function that add new portfolio
-    $res = add_new_portfolio($description, $filename, $user_id);
+    $res = updateportfolio($pro_id, $description, $filename);
 
     if ($res == true) {
-        $success = 'Project Inserted Successfully';
+        header('LOCATION:allportfolio.php');
     } else {
-        $error = 'Project Not Inserted';
+        $error = "Project Not Found";
     }
+} else {
+
+    $pro_id = $_GET['proid'];
+    //function that update portfolio
+    $data = GetPortfoliosById($pro_id);
 }
 
+
+
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -191,11 +198,11 @@ if (isset($_POST['description'])) {
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview ">
-                            <a href="#" class="nav-link">
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Portfolio
+                                    Dashboard
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -203,44 +210,10 @@ if (isset($_POST['description'])) {
                                 <li class="nav-item">
                                     <a href="portfolio.php" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Add New Portfolio</p>
+                                        <p>Portfolio</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="allportfolio.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>All Portfolios</p>
-                                    </a>
-                                </li>
-
-
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview ">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-bars"></i>
-                                <p>
-                                    Settings
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="portfolio.php" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Add New Setting</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="allportfolio.php" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>All Settings</p>
-                                    </a>
-                                </li>
-
-
-                            </ul>
+                               </ul>
                         </li>
                     </ul>
                 </nav>
@@ -279,17 +252,19 @@ if (isset($_POST['description'])) {
 
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Add New Portfolio</h3>
+                            <h3 class="card-title">UpdatePortfolio</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="portfolio.php" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="updateportfolio.php" method="POST" enctype="multipart/form-data">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Description</label>
-                                    <textarea name="description" class="form-control description" cols="10" rows="5"></textarea>
+                                    <textarea name="description" class="form-control description" cols="10" rows="5"><?php echo $data['description']; ?></textarea>
                                 </div>
-
+                                <div class="text-left">
+                                    <img src="upload/<?= $data['image'] ?>" width="90px" height="180px" style="text-align: center;">
+                                </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile">Image</label>
                                     <div class="input-group">
@@ -300,13 +275,14 @@ if (isset($_POST['description'])) {
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="">Upload</span>
                                         </div>
+                                        <input type="hidden" name="pro_id" value="<?= $pro_id ?>">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
                     </div>
