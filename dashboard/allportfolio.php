@@ -4,7 +4,10 @@ session_start();
 
 require_once('lib/portfolio.php');
 
-$data = GetPortfolios();
+$portfolio = new Portfolio();
+$data = $portfolio->GetPortfolios();
+
+   
 ?>
 
 

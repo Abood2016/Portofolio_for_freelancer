@@ -21,7 +21,8 @@ if (isset($_POST['description'])) {
     move_uploaded_file($tmp, "upload/" . $filename);
 
     //function that add new portfolio
-    $res = add_new_portfolio($description, $filename, $user_id);
+    $add_portfolio = new Portfolio();
+    $res = $add_portfolio->add_new_portfolio($description, $filename, $user_id);
 
     if ($res == true) {
         $success = 'Project Inserted Successfully';

@@ -1,5 +1,7 @@
 <?php
 
+class portfolio {
+
 
 function add_new_portfolio($description, $image, $user_id)
 {
@@ -35,7 +37,7 @@ function GetPortfolios()
     while ($res = mysqli_fetch_assoc($q)) {
         $portfolios[] = $res;
     }
-
+  
     return $portfolios;
 }
 
@@ -72,9 +74,15 @@ function GetPortfoliosById($id)
 
 function updateportfolio($id,$description, $image )
 {
-    require_once('dbconnection.php');
 
-    $sql = "UPDATE `portofolio` SET `description` = '$description'";
+        $host = "localhost";
+        $username = "root";
+        $pass = "";
+        $database = "portofolio_for_freelancer";
+
+        $connection =  mysqli_connect($host, $username, $pass, $database);
+
+        $sql = "UPDATE `portofolio` SET `description` = '$description'";
    
     //بتحقق اذا جايني صورة اعمللها append ع الكويري
     if (!empty($image)) {
@@ -82,15 +90,17 @@ function updateportfolio($id,$description, $image )
     }
 
     $sql .= " WHERE `id` = '$id'";
+       
 
-
-    mysqli_query($connection, $sql);
-
+   $result = mysqli_query($connection, $sql);
+        // var_dump($result);
+        // die;
     $res =  mysqli_affected_rows($connection);
-
+       
     if ($res == 1) {
         return true;
     } else {
         return false;
     }
+}
 }

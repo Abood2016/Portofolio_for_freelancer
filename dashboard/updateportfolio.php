@@ -18,10 +18,12 @@ if (isset($_POST['description'])) {
     } else {
         $filename = '';
     }
+ 
+    $por = new portfolio();
+    $por->updateportfolio($pro_id, $description, $filename);
 
-    $res = updateportfolio($pro_id, $description, $filename);
-
-    if ($res == true) {
+    if ($por == true) {
+     
         header('LOCATION:allportfolio.php');
     } else {
         $error = "Project Not Found";
@@ -30,7 +32,9 @@ if (isset($_POST['description'])) {
 
     $pro_id = $_GET['proid'];
     //function that update portfolio
-    $data = GetPortfoliosById($pro_id);
+    $portfolio = new Portfolio();
+    $data = $portfolio->GetPortfoliosById($pro_id);
+    
 }
 
 
